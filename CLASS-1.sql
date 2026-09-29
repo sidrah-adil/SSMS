@@ -138,7 +138,7 @@ SELECT designation, COUNT(id) as EmpCount FROM Employee Group BY designation hav
 INSERT INTO Department VALUES
 ('Academics'), ('SRO'), ('TECH'), ('Marketing'), ('Exam');
 
-SELECT * FROM Department;
+SELECT * FROM Employee;
 
 INSERT INTO Department VALUES
 ('Placement'), ('Admin');
@@ -160,17 +160,17 @@ CREATE TABLE Employee(
 );
 
 INSERT INTO Employee(empName, designation, salary, city, depId) VALUES
-('Ahad', 'CAH', 480000, 'Karachi', 1),
+('Ahad', 'CAH', 480000, 'Lahore', 1),
 ('Hanzala', 'Faculty Member', 80000, 'Karachi', 1),
-('Imran', 'Netword Assistant', 88000, 'Karachi', 3),
-('Rayyan', 'Admin Manager', 1280000, 'Karachi', 7),
-('Nabeel', 'SRO Head', 82000, 'Karachi', 2),
-('Farmil', 'Senior Marketing Agent', 90000, 'Karachi', 4),
-('Fasiha', 'Batch Coordinator', 75000, 'Karachi', 1),
+('Imran', 'Netword Assistant', 88000, 'Isamabad', 3),
+('Rayyan', 'Admin Manager', 1280000, 'Multan', 7),
+('Nabeel', 'SRO Head', 82000, 'Sawat', 2),
+('Farmil', 'Senior Marketing Agent', 90000, 'Hyderabad', 4),
+('Fasiha', 'Batch Coordinator', 75000, 'Kashmir', 1),
 ('Sidrah', 'Manager Academics', 178000, 'Karachi', 1),
-('Bisma', 'Examination Head', 265000, 'Karachi', 5),
-('Iqra',  'DCAH', 190000, 'Karachi', 1),
-('Humaira', 'SRO', 330000, 'Karachi', 2);
+('Bisma', 'Examination Head', 265000, 'Lahore', 5),
+('Iqra',  'DCAH', 190000, 'Quetta', 1),
+('Humaira', 'SRO', 330000, 'Peshawar', 2);
 
 SELECT * FROM Employee;
 
@@ -179,7 +179,7 @@ SELECT empName, designation, depName, city, salary FROM Employee as emp
 INNER JOIN Department as d on emp.depId = d.depId;
 
 INSERT INTO Employee(empName, designation, salary, city)VALUES
-('Fahad', 'CAH', 480000, 'Karachi');
+('Fahad', 'CAH', 480000, 'Islamabad');
 
 
 
@@ -201,7 +201,7 @@ RIGHT JOIN  Employee as emp on d.depId =  emp.depId;
 SELECT empName, designation, depName, city, salary FROM Employee as emp
 FULL OUTER JOIN Department as d on emp.depId = d.depId;
 
---VIEW
+-- VIEW
 CREATE VIEW [empDesignationName] AS SELECT empName, designation FROM Employee;
 
 SELECT * FROM empDesignationName;
@@ -215,3 +215,46 @@ SELECT name, create_date FROM sys.views;
 
 -- DROP VIEW 
 DROP VIEW empDeptName;
+
+--DCL 
+SELECT * FROM sys.sql_logins;
+
+CREATE LOGIN ACC_EMP WITH PASSWORD='12345';
+
+CREATE USER ACC_EMP FROM LOGIN ACC_EMP;
+
+-- IJAZAR = GRANT
+GRANT SELECT on dbo.Employee TO ACC_EMP;
+
+GRANT INSERT, DELETE on dbo.Employee TO ACC_EMP;
+
+-- REVOKE
+REVOKE SELECT on dbo.Employee TO ACC_EMP;
+
+-- DROP LOGIN 
+DROP LOGIN ACC_EMP;
+
+--STORED PROCEDURES
+CREATE PROCEDURE SeeEMP AS
+BEGIN
+SELECT * FROM Employee;
+END;
+
+--data show
+SeeEmp;
+
+CREATE PROCEDURE SeeEMP6 AS
+BEGIN
+SELECT * FROM Employee where id=6;
+END;
+
+-- 1 row ka data dekhna hai
+SeeEMP6;
+
+
+
+
+
+
+
+
